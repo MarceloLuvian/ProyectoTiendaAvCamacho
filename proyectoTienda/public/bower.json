@@ -1,0 +1,24 @@
+{
+  "name": "Tienda",
+  "version": "0.0.1",
+  "description": "Paquetes del frontend para el proyecto Tienda",
+  "moduleType": [
+    "globals"
+  ],
+  "authors": [
+    "Diana Karen Guevara Espiritu y Juan Marcelo Luvian Mendoza"
+  ],
+  "license": "MIT",
+  "homepage": "Tienda.app",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "bootstrap-material-design":"~0.3.0"
+  }
+}
