@@ -15,7 +15,7 @@
             @if($productos->isEmpty())
                 <div class="well text-center">No hay productos disponibles en la base de datos.</div>
             @else
-                <table class="table">
+                <table class="table table-striped table-hover " class="table-responsive">
                     <thead>
                     <th>Tipo de producto</th>
 			<th>Clave</th>
