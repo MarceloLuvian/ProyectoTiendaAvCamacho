@@ -113,6 +113,8 @@ return [
 		/*
 		 * Laravel Framework Service Providers...
 		 */
+
+		'Barryvdh\DomPDF\ServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
@@ -140,6 +142,8 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		Collective\Html\HtmlServiceProvider::class,
+		'yajra\Datatables\DatatablesServiceProvider',	
+
 
 		/*
 		 * Application Service Providers...
@@ -165,6 +169,8 @@ return [
 	*/
 
 	'aliases' => [
+		 'Datatables'      => 'yajra\Datatables\Datatables',
+		'PDF' => 'Barryvdh\DomPDF\Facade',
 		'Form'  => 'Illuminate\Html\FormFacade',
 		'HTML'  => 'Illuminate\Html\HtmlFacade',
 		'Flash' => 'Laracasts\Flash\Flash',

@@ -16,7 +16,7 @@ class CreateproductosTable extends Migration
 		Schema::create('productos', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('tipoproducto')->radio('interno', 'externo');
+			$table->string('tipoproducto');
 			$table->string('CLAVE');
 			$table->string('Fechaingreso');
 			$table->integer('cantidad');

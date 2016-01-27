@@ -5,8 +5,11 @@ namespace App\Libraries\Repositories;
 
 use App\Models\productos;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Http\Request;
+use App\Services\Pagination;
+use Illuminate\Support\Facades\Paginator;
 
-class productosRepository
+class productosRepository 
 {
 
 	/**
@@ -40,6 +43,13 @@ class productosRepository
 
     }
 
+    public function scopeProducto($query, $name){
+			
+		$query->where('descripcion', $name); 
+
+	}
+
+
 	/**
 	 * Stores productos into database
 	 *
@@ -49,7 +59,7 @@ class productosRepository
 	 */
 	public function store($input)
 	{
-		return productos::create($input);
+		return productos::create($input)->paginate(5);
 	}
 
 	/**
@@ -79,4 +89,7 @@ class productosRepository
 
 		return $productos;
 	}
+
+
+	
 }

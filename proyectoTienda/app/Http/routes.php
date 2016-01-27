@@ -15,10 +15,11 @@ Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
-Route::get('principal','PrincipalController@vistaPrincipal');
+
 
 Route::get('registros','RegistrosController@vistaRegistros');
 
+Route::get('venta','ventasController@lista');
 
 
 Route::controllers([
@@ -26,9 +27,20 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::resource('pedidos','pedidosController');
 
+Route::get('pdf', 'PdfController@invoice');
 
 Route::resource('productos', 'productosController');
+
+Route::resource('ventas','ventasController');
+
+Route::post('crear', 'productosController@guardar');
+
+
+Route::get('prod/{id}',['as' => 'prod', 'uses' => 'ventasController@consulta']);
+
+
 
 Route::get('productos/{id}/delete', [
     'as' => 'productos.delete',

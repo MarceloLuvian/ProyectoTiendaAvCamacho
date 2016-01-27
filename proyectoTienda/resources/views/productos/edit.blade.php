@@ -10,5 +10,7 @@
         @include('productos.fields')
 
     {!! Form::close() !!}
+
+    
 </div>
 @endsection

@@ -5,8 +5,11 @@ use App\Http\Requests\CreateproductosRequest;
 use Illuminate\Http\Request;
 use App\Libraries\Repositories\productosRepository;
 use Mitul\Controller\AppBaseController;
+use Illuminate\Database\Eloquent\Model;
 use Response;
 use Flash;
+use App\Services\Pagination;
+use Illuminate\Support\Facades\Paginator;
 
 class productosController extends AppBaseController
 {
@@ -28,18 +31,53 @@ class productosController extends AppBaseController
 	 */
 	public function index(Request $request)
 	{
-	    $input = $request->all();
 
-		$result = $this->productosRepository->search($input);
+	    
 
-		$productos = $result[0];
 
-		$attributes = $result[1];
+	    	if(isset($_GET["name"]))
+	    	{
+	    		$buscar=htmlspecialchars(trim($request->get("name")));
 
-		return view('productos.index')
-		    ->with('productos', $productos)
-		    ->with('attributes', $attributes);;
+	    		$productos = \DB::
+                            table('productos')
+                            ->where('Tipoproducto','like', '%'.$buscar.'%')
+                            ->orwhere('CLAVE', 'like', '%'.$buscar.'%')
+                            ->orwhere('descripcion', 'like', '%'.$buscar.'%')
+                            ->orwhere('cantidad','like', '%'.$buscar.'%')
+                            ->orwhere('fechaingreso', 'like', '%'.$buscar.'%')
+                            ->orwhere('costoventa', 'like', '%'.$buscar.'%')                            
+                            ->paginate(8);
+                           
+                            return view('productos.index', ['productos' => $productos]);
+
+
+	    	}else 
+	    	{
+	    		$productos =  \DB::table('productos')->select('id','tipoproducto','CLAVE','Fechaingreso', 'cantidad', 'descripcion', 'costocompra','costoventa')->paginate(7);
+	    	
+	    		return view('productos.index', ['productos' => $productos]);
+
+	    	}
+		
+		 
+		
 	}
+
+
+	public function guardar(Request $request)
+{ 
+       
+       $file = $request->file('imagen');
+ 
+     
+       $nombre = $file->getClientOriginalName();
+ 
+     
+       \Storage::disk('local')->put($nombre,  \File::get($file));
+ 
+       return "archivo guardado";
+}
 
 	/**
 	 * Show the form for creating a new productos.
@@ -76,13 +114,25 @@ class productosController extends AppBaseController
 	 *
 	 * @return Response
 	 */
+
+	public function getNombre($id)
+	{
+		$nproducto = \DB::select('select Tipoproducto from productos where id = :id', ['id' => $id]);
+
+		foreach ($nproducto as $o) {
+				return $o->Tipoproducto;
+				
+			}
+		
+	}
+
 	public function show($id)
 	{
 		$productos = $this->productosRepository->findproductosById($id);
-
+				
 		if(empty($productos))
 		{
-			Flash::error('productos not found');
+			Flash::error('producto no encontrado');
 			return redirect(route('productos.index'));
 		}
 
@@ -101,7 +151,7 @@ class productosController extends AppBaseController
 
 		if(empty($productos))
 		{
-			Flash::error('productos not found');
+			Flash::error('producto no encontrado');
 			return redirect(route('productos.index'));
 		}
 
@@ -156,5 +206,7 @@ class productosController extends AppBaseController
 
 		return redirect(route('productos.index'));
 	}
+
+
 
 }

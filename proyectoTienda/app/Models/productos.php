@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Pagination;
 
 class productos extends Model
 {
@@ -9,7 +10,7 @@ class productos extends Model
 
 	public $primaryKey = "id";
     
-	public $timestamps = true;
+	public $timestamps = false;
 
 	public $fillable = [
 	    "tipoproducto",
@@ -32,5 +33,8 @@ class productos extends Model
 		"costoventa" => "required",
 		"imagen" => ""
 	];
+
+
+	
 
 }
